@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2016",
+    "lib": ["dom"],
+    /* Modules */
+    "module": "esm",
+
+    /* Emit */
+    "noEmit": true,
+
+    /* Interop Constraints */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": true,
+
+    /* Completeness */
+    "skipLibCheck": true
+  }
+}
