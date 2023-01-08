@@ -1,4 +1,5 @@
 /// <reference types="webrtc" />
+/// <reference types="dom-screen-wake-lock" />
 
 const div = document.getElementById('out')!;
 const values = document.getElementById('values')!;
@@ -9,6 +10,10 @@ function readKnobs() {
   volume = Number(volumeKnob.value) / 100;
   threshold = 4 * (2 ** (Number(sensitivityKnob.value) / 100 * 12));
   console.log(`knobs: ${volume} ${threshold}`);
+}
+
+if ('wakeLock' in navigator) {
+  navigator.wakeLock.request('screen');
 }
 
 let volume = 0;
@@ -58,7 +63,11 @@ function callback(stream: MediaStream) {
     div.style.background = color;
     //values.textContent = `${level} ${color}`;
 
-    vol.gain.value = level > threshold ? (timer / 30) & 1 ? volume : 0 : 0;
+    if (level > threshold) {
+      vol.gain.value = (timer / 30) & 1 ? 0 : volume;
+    } else {
+      vol.gain.value = timer = 0;
+    }
     // (Math.log(level) / Math.log(1.5)) & 1 : 0; // level > 1000 ?  : 0;
 
     requestAnimationFrame(play);
